@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Counter Demo</title>
+</head>
+<body>
+    <h1>Contador:</h1>
+    <div>
+        <span id="Contador"></span>
+        <button id="btnPauseFirstCounter" onclick="pause('Contador')">Pausar</button>
+        <button id="btnRestartFirstCounter" onclick="restart('Contador')">Restart</button>
+    </div>
+    <div>
+        <span id="SegundaContador"></span>
+        <button id="btnPauseFirstCounter" onclick="pause('SegundaContador')">Pausar</button>
+        <button id="btnRestartFirstCounter" onclick="restart('SegundaContador')">Restart</button>
+    </div>
+
+    <br/>
+    <h3>Data of first one </h3>
+    <hr />
+    <div>
+        <button id="btnCurrentTime" onclick="getCurrentTime()">Get Current Time</button>
+        <input type="text" id="currentTime"/>
+        <button id="btnSetCurrenttime" onclick="setCurrentTime()">Set Current Time</button>
+    </div>
+    <div>
+        <button id="btnformattedCurrentTime" onclick="getFormattedCurrentTime()">Formatted Time</button>
+        <input type="text" id="formattedCurrentTime"/>  
+    </div>
+
+    <div>
+        <button id="btnLoadConfiguration" onclick="loadLastConfiguration()">Load last Configuration</button>
+        <input type="text" id="lastConfiguration"/>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../src/timer.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#Contador').timer({ timeLimit: false });
+            $('#SegundaContador').timer({ timeLimit: false });
+
+            var lastConfig = sessionStorage.getItem('lastConfiguration');
+
+            if (lastConfig) {
+                $('#Contador').timer('setCurrentTime', parseInt(lastConfig));
+                $("#lastConfiguration").val(lastConfig);
+                sessionStorage.removeItem('lastConfiguration');
+            } else {
+                $('#lastConfiguration').val('No Last configuration');
+            }
+        });
+
+        function getCurrentTime () {
+            $('#currentTime').val($('#Contador').timer('getCurrentTime'));
+        }
+
+        function getFormattedCurrentTime ()  {
+            $("#formattedCurrentTime").val($('#Contador').timer('getFormattedCurrentTime'));
+        }
+
+        function setCurrentTime () {
+            var newCurrentTime = parseInt($('#currentTime').val());
+            $('#Contador').timer('setCurrentTime', newCurrentTime);
+        }
+
+        function loadLastConfiguration () {
+            var lastConfig = sessionStorage.getItem('lastConfiguration');
+
+            if (lastConfig) {
+                $('#Contador').timer('setCurrentTime', parseInt(lastConfig));
+                $("#lastConfiguration").val(lastConfig);
+                sessionStorage.removeItem('lastConfiguration');
+            } else {
+                $('#lastConfiguration').val('No Last configuration');
+            }
+        }
+
+        function restart(c) {
+            $('#' + c).timer('restart');
+        }
+
+        function pause (c) {
+            $('#' + c).timer('pause');
+        }
+
+        onbeforeunload = function () {
+            sessionStorage.setItem('lastConfiguration', $('#Contador').timer('getCurrentTime'));
+        };
+
+    </script>
+</body>
+</html>
