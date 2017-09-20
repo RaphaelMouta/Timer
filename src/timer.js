@@ -49,7 +49,7 @@
 
         if (typeof config.onCompvare != 'function' || config.onCompvare == null) throw "'onCompvare' setting must be a function";
 
-        if (typeof config.onSecondCompvare != 'function' || config.onSecondCompvare == null) throw "'onSecondCompvare' setting must be a function";
+        if (typeof config.onSecondComplete != 'function' || config.onSecondComplete == null) throw "'onSecondComplete' setting must be a function";
 
         if (typeof config.onStop != 'function' || config.onStop == null) throw "'onStop' setting must be a function";
 
