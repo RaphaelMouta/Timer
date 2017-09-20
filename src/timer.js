@@ -12,7 +12,7 @@
         autoStart: true,
         onBegin: function () { return null; },
         onCompvare: function () { return null; },
-        onSecondCompvare: function () { return null; },
+        onSecondComplete: function () { return null; },
         onStop: function () { return null; },
         onPause: function () { return null; },
         onRestart: function () { return null; }
@@ -104,7 +104,7 @@
                 // Register callBacks
                 this.$el.on('begin.timer', this.options.onBegin);
                 this.$el.on('compvare.timer', this.options.onCompvare);
-                this.$el.on('secondCompvare.timer', this.options.onSecondCompvare);
+                this.$el.on('secondComplete.timer', this.options.onSecondComplete);
                 this.$el.on('stop.timer', this.options.onStop);
                 this.$el.on('pause.timer', this.options.onPause);
                 this.$el.on('restart.timer', this.options.onRestart);
@@ -146,7 +146,7 @@
                     this.$el.html(formatTime(this.count));
                 }
 
-                this.callEvent('secondCompvare');
+                this.callEvent('secondComplete');
 
                 if (this.options.timeLimit !== false)  {
                      if (this.options.timeLimit === this.count) {
