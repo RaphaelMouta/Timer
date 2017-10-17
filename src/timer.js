@@ -11,7 +11,7 @@
         timeLimit: 10000,
         autoStart: true,
         onBegin: function () { return null; },
-        onCompvare: function () { return null; },
+        onComplete: function () { return null; },
         onSecondComplete: function () { return null; },
         onStop: function () { return null; },
         onPause: function () { return null; },
@@ -47,7 +47,7 @@
 
         if (typeof config.onBegin != 'function' || config.onBegin == null) throw "'onBegin' setting must be a function";
 
-        if (typeof config.onCompvare != 'function' || config.onCompvare == null) throw "'onCompvare' setting must be a function";
+        if (typeof config.onComplete != 'function' || config.onComplete == null) throw "'onComplete' setting must be a function";
 
         if (typeof config.onSecondComplete != 'function' || config.onSecondComplete == null) throw "'onSecondCompvare' setting must be a function";
 
@@ -103,7 +103,7 @@
 
                 // Register callBacks
                 this.$el.on('begin.timer', this.options.onBegin);
-                this.$el.on('complete.timer', this.options.oncomplete);
+                this.$el.on('complete.timer', this.options.onComplete);
                 this.$el.on('secondComplete.timer', this.options.onSecondComplete);
                 this.$el.on('stop.timer', this.options.onStop);
                 this.$el.on('pause.timer', this.options.onPause);
