@@ -3,7 +3,7 @@
 // Timer V 0.2.0
 // by: Raphael Mouta
 //
-(function ($){
+(function ($) {
     var instances = [];
     var defaultOptions = {
         type: 'asc',
@@ -49,7 +49,7 @@
 
         if (typeof config.onCompvare != 'function' || config.onCompvare == null) throw "'onCompvare' setting must be a function";
 
-        if (typeof config.onSecondComplete != 'function' || config.onSecondComplete == null) throw "'onSecondComplete' setting must be a function";
+        if (typeof config.onSecondComplete != 'function' || config.onSecondComplete == null) throw "'onSecondCompvare' setting must be a function";
 
         if (typeof config.onStop != 'function' || config.onStop == null) throw "'onStop' setting must be a function";
 
@@ -95,7 +95,7 @@
         // set in the element the  number of instance to which it belong
         this.$el.data('timer', this.instanceNumber);
 
-        if (argumentsArray.length > 0)  {
+        if (argumentsArray.length > 0) {
             if (typeof argumentsArray[0] === 'object') {
                 $.extend(this.options, argumentsArray[0]);
                 // Check on the options object if the values were filled correctly
@@ -103,7 +103,7 @@
 
                 // Register callBacks
                 this.$el.on('begin.timer', this.options.onBegin);
-                this.$el.on('compvare.timer', this.options.onCompvare);
+                this.$el.on('complete.timer', this.options.oncomplete);
                 this.$el.on('secondComplete.timer', this.options.onSecondComplete);
                 this.$el.on('stop.timer', this.options.onStop);
                 this.$el.on('pause.timer', this.options.onPause);
@@ -120,7 +120,7 @@
         verifyConfig: function () { verifyConfig(this.options); },
         initCount: function () {
             this.count = this.options.initTime;
-         
+
             if (this.options.type.toLowerCase() === 'asc') {
                 this.$el.html(formatTime(this.count));
             } else {
@@ -128,16 +128,16 @@
             }
 
             if (this.interval != null) clearInterval(this.interval);
-            
+
             var self = this;
             this.callEvent('begin');
             this.counting();
-            this.interval = setInterval(function () { 
-                self.counting.call(self); 
+            this.interval = setInterval(function () {
+                self.counting.call(self);
             }, 1000);
         },
         counting: function () {
-            if(!this.stopCtrl) {
+            if (!this.stopCtrl) {
                 if (this.options.type.toLowerCase() === 'asc') {
                     this.count += 1;
                     this.$el.html(formatTime(this.count));
@@ -148,10 +148,10 @@
 
                 this.callEvent('secondComplete');
 
-                if (this.options.timeLimit !== false)  {
-                     if (this.options.timeLimit === this.count) {
+                if (this.options.timeLimit !== false) {
+                    if (this.options.timeLimit === this.count) {
                         this.stopCtrl = true;
-                        this.callEvent('compvare');
+                        this.callEvent('complete');
                     }
                 }
             }
@@ -178,18 +178,18 @@
         methods: {
             start: function (instance) {
                 instance.initCount();
-            },     
+            },
             stop: function (instance) {
                 instance.stop();
             },
             pause: function (instance) {
-                if (!instance.interval) 
+                if (!instance.interval)
                     throw "The pause method is only usable when timer is running";
-                
+
                 instance.pause();
             },
-            restart: function (instance)  {
-                if (!instance.interval) 
+            restart: function (instance) {
+                if (!instance.interval)
                     throw "The restart method is only usable when timer is running";
 
                 instance.restart();
@@ -197,7 +197,7 @@
             isPaused: function (instance) {
                 return instance.stopCtrl;
             },
-            getCurrentTime: function (instance)  {
+            getCurrentTime: function (instance) {
                 return instance.count;
             },
             getFormattedCurrentTime: function (instance) {
@@ -208,9 +208,9 @@
                 if (typeof time !== "number" || isNaN(time))
                     throw "Inválid value";
 
-                if (time < 0) 
+                if (time < 0)
                     throw "The value must be greater than 0.";
-                
+
                 instance.count = time - 1;
             }
         }
@@ -226,10 +226,10 @@
                 // call a method
                 if (instanceId !== undefined) {
                     var instance = instances[instanceId];
-            
+
                     var method = argumentsArray.shift();
 
-                    if (instance.methods.hasOwnProperty(method)){
+                    if (instance.methods.hasOwnProperty(method)) {
                         // Remove first element
                         return instance.methods[method](instance, argumentsArray);
                     } else {
@@ -244,8 +244,8 @@
             var instanceId = $(this).data('timer');
 
             if (instanceId === undefined) {
-                 new Timer (this, argumentsArray);
-            } 
+                new Timer(this, argumentsArray);
+            }
         });
     };
 })(jQuery)
