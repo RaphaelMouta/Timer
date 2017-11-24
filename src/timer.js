@@ -120,7 +120,7 @@
         verifyConfig: function () { verifyConfig(this.options); },
         initCount: function () {
             this.count = this.options.initTime;
-
+            
             if (this.options.type.toLowerCase() === 'asc') {
                 this.$el.html(formatTime(this.count));
             } else {
@@ -131,15 +131,19 @@
 
             var self = this;
             this.callEvent('begin');
-            this.counting();
-            this.interval = setInterval(function () {
-                self.counting.call(self);
+            
+            setTimeout(function () {
+                self.counting();
+                self.interval = setInterval(function () {
+                    self.counting.call(self);
+                }, 1000);
             }, 1000);
         },
         counting: function () {
             if (!this.stopCtrl) {
                 if (this.options.type.toLowerCase() === 'asc') {
                     this.count += 1;
+                    console.log(this.count);
                     this.$el.html(formatTime(this.count));
                 } else {
                     this.count -= 1;
